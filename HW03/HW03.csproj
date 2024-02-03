@@ -58,10 +58,27 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Components\Pages\GoTo.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="7.0.0" />
+	</ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Components\Pages\GoTo.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Pages\GoTo.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Components\Pages\GoTo.razor" />
     </ItemGroup>
 
 </Project>

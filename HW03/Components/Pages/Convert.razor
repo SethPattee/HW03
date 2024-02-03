@@ -1,0 +1,50 @@
+﻿@page "/convert"
+<h3>Convert</h3>
+
+<form>
+    <label for="temperature">Temperature (Fahrenheit):</label>
+    <input type="number" id="temperature" @bind="fahrenheitValue" step="any" />
+    <button type="button" @onclick="ConvertTemperature">Convert</button>
+    <p>Celsius: @celsius</p>
+</form>
+
+<form>
+    <label for="distance">Distance (Miles):</label>
+    <input type="number" id="distance" @bind="milesValue" step="any" />
+    <button type="button" @onclick="ConvertDistance">Convert</button>
+    <p>Kilometers: @kilometers</p>
+</form>
+
+<form>
+    <label for="weight">Weight (Kilograms):</label>
+    <input type="number" id="weight" @bind="kilogramsValue" step="any" />
+    <button type="button" @onclick="ConvertWeight">Convert</button>
+    <p>Pounds: @pounds</p>
+</form>
+
+@code {
+    private double fahrenheitValue = 32.0;
+    private double celsius;
+
+    private double milesValue = 1.0;
+    private double kilometers;
+
+    private double kilogramsValue = 1.0;
+    private double pounds;
+
+    private void ConvertTemperature()
+    {
+        celsius = UnitConverters.FahrenheitToCelsius(fahrenheitValue);
+    }
+
+    private void ConvertDistance()
+    {
+        kilometers = UnitConverters.MilesToKilometers(milesValue);
+    }
+
+    private void ConvertWeight()
+    {
+        pounds = UnitConverters.KilogramsToPounds(kilogramsValue);
+    }
+}
+8

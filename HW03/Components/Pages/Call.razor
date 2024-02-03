@@ -1,0 +1,11 @@
+﻿@page "/call" 
+<h3>Call</h3>
+
+@code {
+    public void Calling()
+    {
+        if (PhoneDialer.Default.IsSupported)
+            PhoneDialer.Default.Open("000-000-0000");
+    }
+
+}

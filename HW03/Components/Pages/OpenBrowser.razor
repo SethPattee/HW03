@@ -1,0 +1,18 @@
+﻿@page "/openbrowser"
+<h3>OpenBrowser</h3>
+<button @onclick="BrowserOpen_Clicked">Open Browser</button>
+
+@code {
+    private async Task BrowserOpen_Clicked()
+    {
+        try
+        {
+            Uri uri = new Uri("https://www.snow.edu");
+            await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+        catch (Exception ex)
+        {
+            // An unexpected error occurred. No browser may be installed on the device.
+        }
+    }
+}

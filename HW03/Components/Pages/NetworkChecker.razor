@@ -1,0 +1,55 @@
+﻿@page "/network"
+<h3>NetworkChecker</h3>
+<button @onclick="CheckInternet">Check Internet</button>
+<p>@connection</p>
+
+@code {
+    public string connection = "";
+    private ConnectivityTest connectivityTest;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        connectivityTest = new ConnectivityTest();
+    }
+
+    private void CheckInternet()
+    {
+        NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+
+        if (accessType == NetworkAccess.Internet)
+        {
+            connection = "Connection to the internet is available.";
+        }
+        else
+        {
+            connection = "No internet connection.";
+        }
+    }
+
+    public class ConnectivityTest
+    {
+        public string connection = "";
+
+        public ConnectivityTest()
+        {
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+
+        ~ConnectivityTest()
+        {
+            Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
+        }
+
+        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (e.NetworkAccess == NetworkAccess.ConstrainedInternet)
+                connection = "Internet access is available but is limited.";
+            else if (e.NetworkAccess != NetworkAccess.Internet)
+                connection = "Internet access has been lost.";
+            else
+                connection = "Connection type: " + string.Join(", ", e.ConnectionProfiles);
+
+        }
+    }
+}

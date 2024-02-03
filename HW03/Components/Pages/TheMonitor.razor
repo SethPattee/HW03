@@ -1,0 +1,264 @@
+﻿@page "/monitor"
+<h3>TheMonitor</h3>
+
+<button @onclick="ToggleAccelerometer">Toggle Accelerometer</button>
+<button @onclick="ToggleBarometer">Toggle Barometer</button>
+<button @onclick="ToggleCompass">Toggle Compass</button>
+<button @onclick="ToggleShake">Toggle Shake</button>
+<button @onclick="ToggleGyroscope">Toggle Gyroscope</button>
+<button @onclick="ToggleMagnetometer">Toggle Magnetometer</button>
+<button @onclick="ToggleOrientation">Toggle Orientation</button>
+
+@if (isAccelerometerMonitoring)
+{
+    <p>Accelerometer is currently monitoring</p>
+}
+@if (isBarometerMonitoring)
+{
+    <p>Barometer is currently monitoring</p>
+}
+@if (isCompassMonitoring)
+{
+    <p>Compass is currently monitoring</p>
+}
+@if (isShakeMonitoring)
+{
+    <p>Shake is currently monitoring</p>
+}
+@if (isGyroscopeMonitoring)
+{
+    <p>Gyroscope is currently monitoring</p>
+}
+@if (isMagnetometerMonitoring)
+{
+    <p>Magnetometer is currently monitoring</p>
+}
+@if (isOrientationMonitoring)
+{
+    <p>Orientation is currently monitoring</p>
+}
+
+<p>@AccelLabel.Text</p>
+<p>@BarometerLabel.Text</p>
+<p>@CompassLabel.Text</p>
+<p>@ShakeLabel.Text</p>
+<p>@GyroscopeLabel.Text</p>
+<p>@MagnetometerLabel.Text</p>
+<p>@OrientationLabel.Text</p>
+
+@code {
+    Label AccelLabel = new();
+    Label BarometerLabel = new();
+    Label CompassLabel = new();
+    Label ShakeLabel = new();
+    Label GyroscopeLabel = new();
+    Label MagnetometerLabel = new();
+    Label OrientationLabel = new();
+    
+
+    private bool isAccelerometerMonitoring = false;
+    private bool isBarometerMonitoring = false;
+    private bool isCompassMonitoring = false;
+    private bool isShakeMonitoring = false;
+    private bool isGyroscopeMonitoring = false;
+    private bool isMagnetometerMonitoring = false;
+    private bool isOrientationMonitoring = false;
+
+  
+
+    private void ToggleAccelerometer()
+    {
+        if (Accelerometer.Default.IsSupported)
+        {
+            if (!Accelerometer.Default.IsMonitoring)
+            {
+                Accelerometer.Default.ReadingChanged += Accelerometer_ReadingChanged;
+                Accelerometer.Default.Start(SensorSpeed.UI);
+                isAccelerometerMonitoring = true;
+            }
+            else
+            {
+                Accelerometer.Default.Stop();
+                Accelerometer.Default.ReadingChanged -= Accelerometer_ReadingChanged;
+                isAccelerometerMonitoring = false;
+            }
+        }
+    }
+
+    private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+    {
+        // Update UI Label with accelerometer state
+        AccelLabel.TextColor = Colors.Green;
+        AccelLabel.Text = $"Accel: {e.Reading}";
+    }
+
+    public void ToggleBarometer()
+    {
+        if (Barometer.Default.IsSupported)
+        {
+            if (!Barometer.Default.IsMonitoring)
+            {
+                // Turn on barometer
+                Barometer.Default.ReadingChanged += Barometer_ReadingChanged;
+                Barometer.Default.Start(SensorSpeed.UI);
+                isBarometerMonitoring = true;
+
+            }
+            else
+            {
+                // Turn off barometer
+                Barometer.Default.Stop();
+                Barometer.Default.ReadingChanged -= Barometer_ReadingChanged;
+                isBarometerMonitoring = false;
+
+            }
+        }
+    }
+
+    private void Barometer_ReadingChanged(object sender, BarometerChangedEventArgs e)
+    {
+        // Update UI Label with barometer state
+        BarometerLabel.TextColor = Colors.Green;
+        BarometerLabel.Text = $"Barometer: {e.Reading}";
+    }
+
+    private void ToggleCompass()
+    {
+        if (Compass.Default.IsSupported)
+        {
+            if (!Compass.Default.IsMonitoring)
+            {
+                // Turn on compass
+                Compass.Default.ReadingChanged += Compass_ReadingChanged;
+                Compass.Default.Start(SensorSpeed.UI);
+                isCompassMonitoring = true;
+            }
+            else
+            {
+                // Turn off compass
+                Compass.Default.Stop();
+                Compass.Default.ReadingChanged -= Compass_ReadingChanged;
+                isCompassMonitoring = false;
+            }
+        }
+    }
+
+    private void Compass_ReadingChanged(object sender, CompassChangedEventArgs e)
+    {
+        // Update UI Label with compass state
+        CompassLabel.TextColor = Colors.Green;
+        CompassLabel.Text = $"Compass: {e.Reading}";
+    }
+
+    private void ToggleShake()
+    {
+        if (Accelerometer.Default.IsSupported)
+        {
+            if (!Accelerometer.Default.IsMonitoring)
+            {
+                // Turn on accelerometer
+                Accelerometer.Default.ShakeDetected += Accelerometer_ShakeDetected;
+                Accelerometer.Default.Start(SensorSpeed.Game);
+                isShakeMonitoring = true;
+            }
+            else
+            {
+                // Turn off accelerometer
+                Accelerometer.Default.Stop();
+                Accelerometer.Default.ShakeDetected -= Accelerometer_ShakeDetected;
+                isShakeMonitoring = false;
+            }
+        }
+    }
+
+    private void Accelerometer_ShakeDetected(object sender, EventArgs e)
+    {
+        // Update UI Label with a "shaked detected" notice, in a randomized color
+        ShakeLabel.TextColor = new Color(Random.Shared.Next(256), Random.Shared.Next(256), Random.Shared.Next(256));
+        ShakeLabel.Text = $"Shake detected";
+    }
+
+    private void ToggleGyroscope()
+    {
+        if (Gyroscope.Default.IsSupported)
+        {
+            if (!Gyroscope.Default.IsMonitoring)
+            {
+                // Turn on gyroscope
+                Gyroscope.Default.ReadingChanged += Gyroscope_ReadingChanged;
+                Gyroscope.Default.Start(SensorSpeed.UI);
+                isGyroscopeMonitoring = true;
+            }
+            else
+            {
+                // Turn off gyroscope
+                Gyroscope.Default.Stop();
+                Gyroscope.Default.ReadingChanged -= Gyroscope_ReadingChanged;
+                isGyroscopeMonitoring = false;
+            }
+        }
+    }
+
+    private void Gyroscope_ReadingChanged(object sender, GyroscopeChangedEventArgs e)
+    {
+        // Update UI Label with gyroscope state
+        GyroscopeLabel.TextColor = Colors.Green;
+        GyroscopeLabel.Text = $"Gyroscope: {e.Reading}";
+    }
+
+    private void ToggleMagnetometer()
+    {
+        if (Magnetometer.Default.IsSupported)
+        {
+            if (!Magnetometer.Default.IsMonitoring)
+            {
+                // Turn on magnetometer
+                Magnetometer.Default.ReadingChanged += Magnetometer_ReadingChanged;
+                Magnetometer.Default.Start(SensorSpeed.UI);
+                isMagnetometerMonitoring = true;
+            }
+            else
+            {
+                // Turn off magnetometer
+                Magnetometer.Default.Stop();
+                Magnetometer.Default.ReadingChanged -= Magnetometer_ReadingChanged;
+                isMagnetometerMonitoring = false;
+            }
+        }
+    }
+
+    private void Magnetometer_ReadingChanged(object sender, MagnetometerChangedEventArgs e)
+    {
+        // Update UI Label with magnetometer state
+        MagnetometerLabel.TextColor = Colors.Green;
+        MagnetometerLabel.Text = $"Magnetometer: {e.Reading}";
+    }
+
+    private void ToggleOrientation()
+    {
+        if (OrientationSensor.Default.IsSupported)
+        {
+            if (!OrientationSensor.Default.IsMonitoring)
+            {
+                // Turn on orientation
+                OrientationSensor.Default.ReadingChanged += Orientation_ReadingChanged;
+                OrientationSensor.Default.Start(SensorSpeed.UI);
+                isOrientationMonitoring = true;
+            }
+            else
+            {
+                // Turn off orientation
+                OrientationSensor.Default.Stop();
+                OrientationSensor.Default.ReadingChanged -= Orientation_ReadingChanged;
+                isOrientationMonitoring = false;
+            }
+        }
+    }
+
+    private void Orientation_ReadingChanged(object sender, OrientationSensorChangedEventArgs e)
+    {
+        // Update UI Label with orientation state
+        OrientationLabel.TextColor = Colors.Green;
+        OrientationLabel.Text = $"Orientation: {e.Reading}";
+    }
+}

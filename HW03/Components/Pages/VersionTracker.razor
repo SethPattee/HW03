@@ -1,0 +1,27 @@
+﻿@using Microsoft.Maui.ApplicationModel
+@page "/versiontracker"
+<h3>VersionTracker</h3>
+<button @onclick="ReadVersion_Clicked">Find Version</button>
+<h4>Text</h4>
+<div>@text</div>
+
+@code {
+    public Label text = new Label();
+
+    private void ReadVersion_Clicked()
+    {
+        text.Text += "IsFirstLaunchEver: " + VersionTracking.Default.IsFirstLaunchEver + "<br />";
+        text.Text += "IsFirstLaunchForCurrentVersion: " + VersionTracking.Default.IsFirstLaunchForCurrentVersion + "<br />";
+        text.Text += "IsFirstLaunchForCurrentBuild: " + VersionTracking.Default.IsFirstLaunchForCurrentBuild + "<br />";
+        text.Text += "CurrentVersion: " + VersionTracking.Default.CurrentVersion + "<br />";
+        text.Text += "CurrentBuild: " + VersionTracking.Default.CurrentBuild + "<br />";
+        text.Text += "FirstInstalledVersion: " + VersionTracking.Default.FirstInstalledVersion + "<br />";
+        text.Text += "FirstInstalledBuild: " + VersionTracking.Default.FirstInstalledBuild + "<br />";
+        text.Text += "VersionHistory: " + String.Join(',', VersionTracking.Default.VersionHistory) + "<br />";
+        text.Text += "BuildHistory: " + String.Join(',', VersionTracking.Default.BuildHistory) + "<br />";
+
+        // These two properties may be null if this is the first version
+        text.Text += "PreviousVersion: " + (VersionTracking.Default.PreviousVersion?.ToString() ?? "none") + "<br />";
+        text.Text += "PreviousBuild: " + (VersionTracking.Default.PreviousBuild?.ToString() ?? "none") + "<br />";
+    }
+}

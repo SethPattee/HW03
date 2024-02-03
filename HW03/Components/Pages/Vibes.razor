@@ -1,0 +1,32 @@
+﻿@page "/vibes"
+<h3>Vibes</h3>
+
+<input type="checkbox" @bind="isVibrating" />
+<button @onclick="VibrateStartButton_Clicked">Start Vibration</button>
+<button @onclick="VibrateStopButton_Clicked">Stop Vibration</button>
+
+@code {
+    private bool isVibrating = false;
+
+    private void VibrateStartButton_Clicked()
+    {
+        if (!isVibrating)
+        {
+            int secondsToVibrate = Random.Shared.Next(1, 7);
+            TimeSpan vibrationLength = TimeSpan.FromSeconds(secondsToVibrate);
+
+            Vibration.Default.Vibrate(vibrationLength);
+            isVibrating = true;
+        }
+    }
+
+    private void VibrateStopButton_Clicked()
+    {
+        if (isVibrating)
+        {
+            Vibration.Default.Cancel();
+            isVibrating = false;
+        }
+    }
+}
+

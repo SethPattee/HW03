@@ -1,0 +1,47 @@
+﻿@page "/deviceinfo"
+<h3>DeviceInfo</h3>
+<label id="DisplayDeviceLabel"></label>
+
+@code {
+    private void ReadDeviceInfo()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        sb.AppendLine($"Model: {DeviceInfo.Current.Model}");
+        sb.AppendLine($"Manufacturer: {DeviceInfo.Current.Manufacturer}");
+        sb.AppendLine($"Name: {DeviceInfo.Current.Name}");
+        sb.AppendLine($"OS Version: {DeviceInfo.Current.VersionString}");
+        sb.AppendLine($"Idiom: {DeviceInfo.Current.Idiom}");
+        sb.AppendLine($"Platform: {DeviceInfo.Current.Platform}");
+
+        bool isVirtual = DeviceInfo.Current.DeviceType switch
+        {
+            DeviceType.Physical => false,
+            DeviceType.Virtual => true,
+            _ => false
+        };
+
+        sb.AppendLine($"Virtual device? {isVirtual}");
+
+    }
+
+    private bool IsAndroid() =>
+    DeviceInfo.Current.Platform == DevicePlatform.Android;
+
+    private void PrintIdiom()
+    {
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
+            Console.WriteLine("The current device is a desktop");
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+            Console.WriteLine("The current device is a phone");
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Tablet)
+            Console.WriteLine("The current device is a Tablet");
+    }
+
+    bool isVirtual = DeviceInfo.Current.DeviceType switch
+    {
+        DeviceType.Physical => false,
+        DeviceType.Virtual => true,
+        _ => false
+    };
+}

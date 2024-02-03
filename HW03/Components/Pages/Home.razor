@@ -1,37 +1,12 @@
 ﻿@page "/"
 
 <h1>Hello, world!</h1>
-<button @onclick="BrowserOpen_Clicked">Open Browser</button>
-<button @onclick="NavigateToBuilding25">Go to a Place</button>
+
 
 Welcome to your new app.
 
 @code {
-    private async Task BrowserOpen_Clicked()
-    {
-        try
-        {
-            Uri uri = new Uri("https://www.microsoft.com");
-            await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
-        }
-        catch (Exception ex)
-        {
-            // An unexpected error occurred. No browser may be installed on the device.
-        }
-    }
+    
 
-    public async Task NavigateToBuilding25()
-    {
-        var location = new Location(47.645160, -122.1306032);
-        var options = new MapLaunchOptions { Name = "Microsoft Building 25" };
-
-        try
-        {
-            await Map.Default.OpenAsync(location, options);
-        }
-        catch (Exception ex)
-        {
-            // No map application available to open
-        }
-    }
+    
 }

@@ -1,0 +1,23 @@
+﻿@page "/goto"
+<h3>GoTo</h3>
+
+<button @onclick="NavigateToBuilding25">Go to a Place</button>
+
+
+@code {
+    public async Task NavigateToBuilding25()
+    {
+        var location = new Location(39.361111, -111.583786);
+        var options = new MapLaunchOptions { Name = "Snow College" };
+
+        try
+        {
+            await Map.Default.OpenAsync(location, options);
+        }
+        catch (Exception ex)
+        {
+            // No map application available to open
+        }
+    }
+
+}

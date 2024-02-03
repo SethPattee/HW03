@@ -1,0 +1,20 @@
+﻿@page "/speaking"
+<h3>Speaking</h3>
+
+<form>
+    <label for="textToSpeak">Text to Speak:</label>
+    <input type="text" id="textToSpeak" @bind="textToSpeak" />
+    <button type="button" @onclick="Speak">Speak</button>
+</form>
+
+@code {
+    private string textToSpeak = "";
+
+    public async void Speak()
+    {
+        if (!string.IsNullOrWhiteSpace(textToSpeak))
+        {
+            await TextToSpeech.Default.SpeakAsync(textToSpeak);
+        }
+    }
+}

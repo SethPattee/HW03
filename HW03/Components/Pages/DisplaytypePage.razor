@@ -1,0 +1,24 @@
+﻿@page "/displaytypepage"
+<h3>DisplaytypePage</h3>
+
+<div>
+    <label for="displayDetails">Display Details:</label>
+    <p id="displayDetails">@DisplayDetailsLabel</p>
+</div>
+
+@code {
+    private void ReadDeviceDisplay()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        sb.AppendLine($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+        sb.AppendLine($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+        sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+        sb.AppendLine($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
+        sb.AppendLine($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
+
+        DisplayDetailsLabel = sb.ToString();
+    }
+
+    private string DisplayDetailsLabel { get; set; }
+}
